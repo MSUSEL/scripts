@@ -26,4 +26,5 @@ if ((Test-Path "c:\Program Files (x86)\Java") -Or (Test-Path "c:\Program Files\J
 Write-Host 'Setting up Path variables.'
 [System.Environment]::SetEnvironmentVariable("JAVA_HOME", "c:\Program Files\Java\jre1.8.0_151", "Machine")
 [System.Environment]::SetEnvironmentVariable("PATH", $Env:Path + ";c:\Program Files\Java\jre1.8.0_151\bin", "Machine")
+$env:Path = [System.Environment]::GetEnvironmentVariable(“Path”, “Machine”)
 Write-Host 'Done. Goodbye.'
