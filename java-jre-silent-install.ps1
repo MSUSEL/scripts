@@ -1,4 +1,4 @@
-$destination64="C:\Install\jre-8u151-windows-x64.exe"
+$exelocation="C:\Install\jre-8u151-windows-x64.exe"
 
 Write-Host 'Checking if Java is already installed'
 if ((Test-Path "c:\Program Files (x86)\Java") -Or (Test-Path "c:\Program Files\Java")) {
@@ -9,7 +9,7 @@ Write-Host 'Java not currently installed'
 
 try {
     Write-Host 'Installing JRE-x64'
-    $proc1 = Start-Process -FilePath "$destination64" -ArgumentList "/s REBOOT=ReallySuppress" -Wait -PassThru
+    $proc1 = Start-Process -FilePath "$exelocation" -ArgumentList "/s REBOOT=ReallySuppress" -Wait -PassThru
     $proc1.waitForExit()
     Write-Host 'Installation Done.'
 } catch [exception] {
