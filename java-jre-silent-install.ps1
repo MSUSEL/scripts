@@ -1,26 +1,14 @@
-$JDK_VER="8u151"
-$JDK_FULL_VER="8u151-b12"
-$JDK_PATH="1.7.0_75"
-$source64 = "http://download.oracle.com/otn-pub/java/jdk/$JDK_FULL_VER/jdk-$JDK_VER-windows-x64.exe"
-$destination64 = "C:\Install\$JDK_VER-windows-x64.exe"
+$destination64="C:\Install\jre-8u151-windows-x64.exe"
 
 Write-Host 'Checking if Java is already installed'
 if ((Test-Path "c:\Program Files (x86)\Java") -Or (Test-Path "c:\Program Files\Java")) {
     Write-Host 'No need to Install Java'
     Exit
 }
-
-Write-Host 'Downloading x64 to $destination64'
-
-curl $source64 -OutFile $destination64
-if (!(Test-Path $destination64)) {
-    Write-Host "Downloading $destination64 failed"
-    Exit
-}
-
+Write-Host 'Java not currently installed'
 
 try {
-    Write-Host 'Installing JDK-x64'
+    Write-Host 'Installing JRE-x64'
     $proc1 = Start-Process -FilePath "$destination64" -ArgumentList "/s REBOOT=ReallySuppress" -Wait -PassThru
     $proc1.waitForExit()
     Write-Host 'Installation Done.'
@@ -36,6 +24,6 @@ if ((Test-Path "c:\Program Files (x86)\Java") -Or (Test-Path "c:\Program Files\J
     Write-Host 'Java installed successfully.'
 }
 Write-Host 'Setting up Path variables.'
-[System.Environment]::SetEnvironmentVariable("JAVA_HOME", "c:\Program Files (x86)\Java\jdk$JDK_PATH", "Machine")
-[System.Environment]::SetEnvironmentVariable("PATH", $Env:Path + ";c:\Program Files (x86)\Java\jdk$JDK_PATH\bin", "Machine")
+[System.Environment]::SetEnvironmentVariable("JAVA_HOME", "c:\Program Files\Java\jre1.8.0_151", "Machine")
+[System.Environment]::SetEnvironmentVariable("PATH", $Env:Path + ";c:\Program Files\Java\jre1.8.0_151\bin", "Machine")
 Write-Host 'Done. Goodbye.'
