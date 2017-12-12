@@ -64,6 +64,7 @@ Write-Host 'Unzipping SonarQube...'
 Add-Type –A System.IO.Compression.FileSystem
 [IO.Compression.ZipFile]::ExtractToDirectory("C:\sonarqube-5.6.7.zip", "C:\")
 rm "C:\sonarqube-5.6.7.zip"
+
 Write-Host 'SonarQube extracted to C: drive.'
 
 Write-Host 'Script finished. Be sure to install MySQL.msi manually.'
