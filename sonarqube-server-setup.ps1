@@ -52,7 +52,8 @@ Write-Host 'SonarQube 5.6.7 Downloaded.'
 # silent install of JRE, and add to path
 Write-Host 'Beginning silent install of JRE...'
 $exelocation = "C:\Install\jre-download.exe"
-$proc1 = Start-Process -FilePath $exelocation -ArgumentList "/s REBOOT=ReallySuppress" -Wait –PassThru
+$proc1 = Start-Process -FilePath $exelocation -ArgumentList "/s REBOOT=ReallySuppress" -Wait -PassThru
+$proc1.waitForExit()
 Write-Host 'Adding JRE to Path...'
 [System.Environment]::SetEnvironmentVariable("PATH", $Env:Path + ";C:\Program Files\Java\jre1.8.0_151\bin", "Machine")
 $env:Path = [System.Environment]::GetEnvironmentVariable("PATH", "Machine")
