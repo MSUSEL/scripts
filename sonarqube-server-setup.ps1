@@ -49,3 +49,20 @@ Write-Host 'SonarQube 5.6.7 Downloaded.'
 
 
 ### begin install of dependencies
+# silent install of JRE, and add to path
+Write-Host 'Beginning silent install of JRE...'
+$exelocation = "C:\Install\jre-download.exe"
+$proc1 = Start-Process -FilePath $exelocation -ArgumentList "/s REBOOT=ReallySuppress" -Wait –PassThru
+Write-Host 'Adding JRE to Path...'
+[System.Environment]::SetEnvironmentVariable("PATH", $Env:Path + ";C:\Program Files\Java\jre1.8.0_151\bin", "Machine")
+$env:Path = [System.Environment]::GetEnvironmentVariable("PATH", "Machine")
+Write-Host 'JRE install finished.'
+
+# extract SonarQube to C: directory
+Write-Host 'Unzipping SonarQube...'
+Add-Type –A System.IO.Compression.FileSystem
+[IO.Compression.ZipFile]::ExtractToDirectory("C:\sonarqube-5.6.7.zip", "C:\")
+rm "C:\sonarqube-5.6.7.zip"
+Write-Host 'SonarQube extracted to C: drive.'
+
+Write-Host 'Script finished. Be sure to install MySQL.msi manually.'
