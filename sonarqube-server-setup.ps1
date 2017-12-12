@@ -6,7 +6,7 @@
 # Author:                                                                     #
 #   - David Rice, MSU Software Engineering Laboratory                         #
 # Last Updated:                                                               #
-#   - December 8, 2017                                                        #
+#   - December 12, 2017                                                       #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 # java download parameters
@@ -30,7 +30,7 @@ mkdir C:\Install
 # java
 Write-Host 'Downloading Java JRE...'
 $client = new-object System.Net.WebClient
-$cookie = JRE_COOKIE
+$cookie = $JRE_COOKIE
 $client.Headers.Add([System.Net.HttpRequestHeader]::Cookie, $cookie)
 $client.DownloadFile($JRE_SOURCE, $JRE_DEST)
 Write-Host 'JRE Downloaded.'
