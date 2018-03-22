@@ -1,13 +1,18 @@
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-# Powershell script to download, install, and configure needed dependencies   #
-# to run a SonarQube server on a Microsoft Server 2012 Core.                  #
-# Assumed Environment:                                                        #
-#   - A clean install of Microsoft Server 2012 Core 64 bit (GUI optional).    #
-# Author:                                                                     #
-#   - David Rice, MSU Software Engineering Laboratory                         #
-# Last Updated:                                                               #
-#   - March 21, 2018                                                          #
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# Powershell script to download, install, and configure needed dependencies       #
+# to run a SonarQube server on a Microsoft Server 2012 Core.                      #
+# Assumed Environment:                                                            #
+#   - A clean install of Microsoft Server 2012 Core 64 bit (GUI optional).        #
+#   - Assumed the repository containing this script (sonarqube-setup-script.git)  #
+#   exists as cloned in order to navigate to and use the resources folder .       #
+# Author:                                                                         #
+#   - David Rice, MSU Software Engineering Laboratory                             #
+# Last Updated:                                                                   #
+#   - March 21, 2018                                                              #
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+# this script location
+$SCRIPT_DIR = Split-Path -Path $MyInvocation.MyCommand.Definition -Parent
 
 # java download parameters
 $JAVA_VERS_A = "8"
@@ -24,7 +29,8 @@ $MYSQL_DEST = "C:\Install\mysql-download.msi"
 # sonarqube download parameters
 $SONAR_SOURCE = "https://sonarsource.bintray.com/Distribution/sonarqube/sonarqube-5.6.7.zip"
 $SONAR_DEST = "C:\sonarqube-5.6.7.zip"
-$SONAR_PROP = ""
+$SONAR_PROP_OLD = "C:\sonarqube-5.6.7\conf\sonar.properties"
+$SONAR_PROP_NEW = ".\script-resources\sonar.properties"
 
 
 ### begin download of dependencies
@@ -108,6 +114,17 @@ Catch {
     Write-Error "SonarQube unzip failed. Ensure C:\sonarqube-5.6.7.zip exists on the system." -ErrorAction Stop
 }
 # configure SonarQube properties
+Try {
+    Set-Location $scriptDir
+    Write-Host "Configuring SonarQube properties..."
+    Remove-Item "C:\sonarqube-5.6.7\conf\sonar.properties"
+    Copy-Item ".\script-resources\sonar.properties" -Destination "C:\sonarqube-5.6.7\conf"
+    Set-Location "C:\"
+}
+Catch {
+    Write-Error 'Sonar properties file replacement failed. Ensure that $SONAR_PROP_OLD and $SONAR_PROP_NEW exist in their correct relative directories' -ErrorAction Stop
+}
 
+TODO : Pick up here (still need to think about how to handle MySQL)
 
 Write-Host 'Script finished. Be sure to install and configure MySQL.msi manually.'
